@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-background: #FAFAFA;
+    --bg-surface: #FFFFFF;
+    --border-color: #E4E4E7;
+    --text-foreground: #09090B;
+    --text-muted: #71717A;
+  }
+  
+  .dark {
+    --bg-background: #09090B;
+    --bg-surface: #18181B;
+    --border-color: #27272A;
+    --text-foreground: #FAFAFA;
+    --text-muted: #A1A1AA;
+  }
+
+  html, body {
+    @apply h-full antialiased;
+    font-family: 'Inter', sans-serif;
+  }
+  body {
+    background-color: var(--bg-background);
+    color: var(--text-foreground);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    background-color: color-mix(in srgb, var(--bg-surface) 80%, transparent);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+  }
+}
