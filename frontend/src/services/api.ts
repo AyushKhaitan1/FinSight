@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useAuthStore } from '../store/authStore';
 
 const api = axios.create({
-  baseURL: 'http://127.0.0.1:5001/api/v1',
+  baseURL: import.meta.env.VITE_API_URL || 'https://finsight-backend-qlya.onrender.com/api/v1',
   headers: {
     'Content-Type': 'application/json',
   },
