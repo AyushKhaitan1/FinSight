@@ -25,7 +25,14 @@ const PORT = process.env.PORT || 5001;
 app.get('/', (req, res) => res.send('🚀 FINSIGHT BACKEND IS ALIVE V2.4'));
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: [
+    'https://finsight-frontend-mffn.onrender.com',
+    'http://localhost:5173',
+    'http://127.0.0.1:5173'
+  ],
+  credentials: true
+}));
 app.use(helmet());
 
 // Debug logger - MUST be above routes
