@@ -216,7 +216,7 @@ export default function Overview() {
                   <Tooltip 
                     contentStyle={{ backgroundColor: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: '8px' }}
                     itemStyle={{ color: 'var(--text-foreground)' }}
-                    formatter={(val: number) => `₹${val.toLocaleString()}`}
+                    formatter={(val: any) => `₹${Number(val).toLocaleString()}`}
                   />
                   <Area type="monotone" dataKey="balance" stroke="#6366F1" strokeWidth={2} fillOpacity={1} fill="url(#colorBalance)" />
                 </AreaChart>
@@ -241,7 +241,7 @@ export default function Overview() {
                   <Tooltip 
                     cursor={{ fill: 'var(--border-color)', opacity: 0.4 }}
                     contentStyle={{ backgroundColor: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: '8px' }}
-                    formatter={(val: number) => `₹${val.toLocaleString()}`}
+                    formatter={(val: any) => `₹${Number(val).toLocaleString()}`}
                   />
                   <Bar dataKey="income" name="Income" fill="#10B981" radius={[4, 4, 0, 0]} />
                   <Bar dataKey="expense" name="Expense" fill="#EF4444" radius={[4, 4, 0, 0]} />

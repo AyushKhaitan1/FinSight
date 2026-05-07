@@ -158,7 +158,7 @@ export default function Investments() {
                     <Tooltip 
                       contentStyle={{ backgroundColor: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: '8px' }}
                       itemStyle={{ color: 'var(--text-foreground)' }}
-                      formatter={(val: number) => `₹${val.toLocaleString()}`}
+                      formatter={(val: any) => `₹${Number(val).toLocaleString()}`}
                     />
                   </PieChart>
                 </ResponsiveContainer>
