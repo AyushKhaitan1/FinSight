@@ -77,7 +77,7 @@ npm run dev
 ```bash
 cd ../frontend
 npm install
-# Update services/api.ts to point to http://localhost:5001/api/v1
+# Update src/services/api.ts to point to http://localhost:5001/api/v1
 npm run dev
 ```
 
