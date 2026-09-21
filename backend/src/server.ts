@@ -10,6 +10,7 @@ import aiRoutes from './routes/aiRoutes';
 import ocrRoutes from './routes/ocrRoutes';
 import sipRoutes from './routes/sipRoutes';
 import userRoutes from './routes/userRoutes';
+import { errorHandler } from './middleware/errorHandler';
 
 import cron from 'node-cron';
 import { SIP } from './models/SIP';
@@ -98,6 +99,10 @@ cron.schedule('0 0 * * *', async () => {
 app.get('/api/v1/health', (req, res) => {
   res.status(200).json({ status: 'OK', message: 'FinSight API is running', version: '2.4' });
 });
+
+// Central error handler — must be registered after all routes. Handlers wrapped
+// in asyncHandler forward errors here instead of repeating a per-route catch.
+app.use(errorHandler);
 
 const connectDB = async () => {
   try {
