@@ -35,10 +35,25 @@ app.use(cors({
 }));
 app.use(helmet());
 
-// Debug logger - MUST be above routes
+// Debug logger - MUST be above routes.
+// Request bodies are only logged outside production, and sensitive fields are
+// redacted, so credentials (e.g. login passwords) and financial data never
+// reach production logs.
+const REDACTED_FIELDS = ['password', 'token', 'jwt', 'secret'];
+const redactBody = (body: unknown): unknown => {
+  if (!body || typeof body !== 'object') return body;
+  const clone: Record<string, unknown> = { ...(body as Record<string, unknown>) };
+  for (const key of Object.keys(clone)) {
+    if (REDACTED_FIELDS.some((f) => key.toLowerCase().includes(f))) clone[key] = '[REDACTED]';
+  }
+  return clone;
+};
+
 app.use((req, res, next) => {
   console.log(`[${new Date().toLocaleTimeString()}] ${req.method} ${req.originalUrl}`);
-  if (req.method !== 'GET') console.log('Body:', JSON.stringify(req.body, null, 2));
+  if (process.env.NODE_ENV !== 'production' && req.method !== 'GET') {
+    console.log('Body:', JSON.stringify(redactBody(req.body), null, 2));
+  }
   next();
 });
 
