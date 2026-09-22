@@ -10,9 +10,9 @@ import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import { useAuthStore } from './store/authStore';
 import { useThemeStore } from './store/themeStore';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 
-function ProtectedRoute({ children }: { children: JSX.Element }) {
+function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, _hasHydrated } = useAuthStore();
   
   if (!_hasHydrated) {
