@@ -11,6 +11,7 @@ import ocrRoutes from './routes/ocrRoutes';
 import sipRoutes from './routes/sipRoutes';
 import userRoutes from './routes/userRoutes';
 import { errorHandler } from './middleware/errorHandler';
+import { authLimiter } from './middleware/rateLimiters';
 
 import cron from 'node-cron';
 import { SIP } from './models/SIP';
@@ -59,7 +60,7 @@ app.use((req, res, next) => {
 });
 
 // Routes
-app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/auth', authLimiter, authRoutes);
 app.use('/api/v1/transactions', transactionRoutes);
 app.use('/api/v1/investments', investmentRoutes);
 app.use('/api/v1/sips', sipRoutes);
