@@ -6,6 +6,7 @@ import api from '../../services/api';
 
 export default function Transactions() {
   const [transactions, setTransactions] = useState<any[]>([]);
+  const [searchTerm, setSearchTerm] = useState('');
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isScannerOpen, setIsScannerOpen] = useState(false);
   const [selectedData, setSelectedData] = useState<any>(null);
@@ -23,6 +24,11 @@ export default function Transactions() {
   useEffect(() => {
     fetchTransactions();
   }, []);
+
+  const filteredTransactions = transactions.filter((tx) =>
+  tx.merchant?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  tx.category?.toLowerCase().includes(searchTerm.toLowerCase())
+);
 
   const handleScanComplete = (data: any) => {
     setSelectedData({
@@ -84,11 +90,13 @@ export default function Transactions() {
         <div className="p-4 border-b border-border flex justify-between items-center bg-surface/50">
           <div className="relative w-72">
             <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
-            <input 
-              type="text" 
-              placeholder="Search transactions..." 
-              className="w-full bg-background border border-border rounded-lg pl-9 pr-4 py-2.5 text-sm text-foreground focus:outline-none focus:border-primary"
-            />
+         <input 
+  type="text" 
+  placeholder="Search transactions..." 
+  value={searchTerm}
+  onChange={(e) => setSearchTerm(e.target.value)}
+  className="w-full bg-background border border-border rounded-lg pl-9 pr-4 py-2.5 text-sm text-foreground focus:outline-none focus:border-primary"
+/>
           </div>
           <button className="text-muted hover:text-foreground flex items-center gap-2 text-sm font-medium">
             <Download className="w-4 h-4" /> Export CSV
@@ -107,14 +115,14 @@ export default function Transactions() {
               </tr>
             </thead>
             <tbody className="divide-y divide-[var(--border-color)]">
-              {transactions.length === 0 ? (
+               {filteredTransactions.length === 0 ? (
                 <tr>
                   <td colSpan={5} className="px-6 py-12 text-center text-muted">
                     No transactions found. Click "Add Expense" to get started.
                   </td>
                 </tr>
               ) : (
-                transactions.map((tx) => (
+                filteredTransactions.map((tx) => (
                   <tr key={tx._id} className="hover:bg-surface/60 transition-colors">
                     <td className="px-6 py-4 text-muted">
                       {new Date(tx.date).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}
